@@ -1,6 +1,6 @@
 # MMK3-HID-Control
 
-![Display Images on Maschine MK3 screens](https://repository-images.githubusercontent.com/260289282/8e735200-8f1c-11ea-94f3-68c94e5293a1)
+
 the problem we are trying to solve is the problem of gaining access to the gorgeous screens found on newer generation ni products, namely **Maschine MK3** and **Komplete Kontrol S-MK2** series.
 
 this can be very useful if we for example want to use one of those ni products with ableton live and be able to see meaningful feedback on the screens instead of using the old and ugly mackie control protocol for text display. to make things worse, mackie is only available on the maschine mk3 hardware and not the komplete series.
@@ -9,6 +9,8 @@ for this prototype engine we will try to accomplish 2 things:
 
 - send valid data messages to Maschine MK3 to fill the screens with colors.
 - send images to Maschine MK3 screens
+
+![Display Images on Maschine MK3 screens](https://repository-images.githubusercontent.com/260289282/8e735200-8f1c-11ea-94f3-68c94e5293a1)
 
  since we know the product ids of all NI products with similar screens, we could  assume that what works here will also work with komplete keyboards from the S mk2 family *with minor touches*. in order to be able to access Maschine MK3 screens and therefore be able to accomplish the goals of this prototype we must suspend ni drivers.
 
