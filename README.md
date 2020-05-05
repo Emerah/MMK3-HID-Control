@@ -1,5 +1,6 @@
 # MMK3-HID-Control
 
+![Display Images on Maschine MK3 screens](https://repository-images.githubusercontent.com/260289282/8e735200-8f1c-11ea-94f3-68c94e5293a1)
 the problem we are trying to solve is the problem of gaining access to the gorgeous screens found on newer generation ni products, namely **Maschine MK3** and **Komplete Kontrol S-MK2** series.
 
 this can be very useful if we for example want to use one of those ni products with ableton live and be able to see meaningful feedback on the screens instead of using the old and ugly mackie control protocol for text display. to make things worse, mackie is only available on the maschine mk3 hardware and not the komplete series.
