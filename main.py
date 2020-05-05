@@ -9,11 +9,13 @@
 #
 # *****************************************************************************
 
-import time
 import random
-from message import Blit, ColorPixel, Coordinates, End, Header, Message, Repeat, Size
-from util import suspend_ni_backend_support
+import time
+
 from device import MaschineMKiii
+from image import MaschineImage
+from message import (Blit, ColorMessage, ColorPixel, Coordinates, End, Header, Repeat, Size, ImageMessage)  # Transfer
+from util import suspend_ni_backend_support
 
 
 def do_screen_color_test():
@@ -24,9 +26,9 @@ def do_screen_color_test():
     data = ColorPixel(value=43594)
     blit = Blit()
     end = End(screen_index=0)
-    message = Message(header=header, coordinates=coordinates, size=size, command=command, data=data, blit=blit, end=end)
+    message = ColorMessage(header=header, coordinates=coordinates, size=size, command=command, data=data, blit=blit, end=end)
     maschine.claim_bulk_interface()
-    for i in range(30):
+    for i in range(5):
         header.screen_index = 0
         color = random.choice(range(65000))
         data.value = color
@@ -37,7 +39,30 @@ def do_screen_color_test():
         maschine.send_bulk_transfer_data(message.byte_value)
         time.sleep(0.25)
     maschine.release_bulk_interface()
-    print('full message', message.byte_value)
+
+
+def do_image_test():
+    live_image = MaschineImage('Live.jpg')
+    live_image_bytes = live_image.rgb565_bytes
+    maschine_image = MaschineImage('maschine.jpg')
+    maschine_image_bytes = maschine_image.rgb565_bytes
+    header = Header(screen_index=0)
+    coordinates = Coordinates(x_pos=0, y_pos=0)
+    size = Size(width=480, height=272)
+    # command = Transfer(int(len(live_image_bytes) / 2))
+    command = bytes.fromhex('0000ff00')
+    data = live_image_bytes
+    blit = Blit()
+    end = End(screen_index=0)
+    live_message = ImageMessage(header=header, coordinates=coordinates, size=size, command=command, data=data, blit=blit, end=end)
+    maschine.claim_bulk_interface()
+    maschine.send_bulk_transfer_data(live_message.byte_value)
+    header.screen_index = 1
+    data = maschine_image_bytes
+    end.screen_index = 1
+    maschine_message = ImageMessage(header=header, coordinates=coordinates, size=size, command=command, data=data, blit=blit, end=end)
+    maschine.send_bulk_transfer_data(maschine_message.byte_value)
+    maschine.release_bulk_interface()
 
 
 if __name__ == "__main__":
@@ -46,4 +71,6 @@ if __name__ == "__main__":
         suspend_ni_backend_support()
     maschine = MaschineMKiii()
     do_screen_color_test()
+    do_image_test()
+    maschine.dispose()
     print('done')

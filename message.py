@@ -190,7 +190,7 @@ class ColorPixel(MessageBase):
         return self.value
 
 
-class Message(MessageBase):
+class ColorMessage(MessageBase):
     def __init__(self, header: Header, coordinates: Coordinates, size: Size, command: Command, data: ColorPixel, blit: Blit, end: End):
         # def __init__(self, header, coordinates, size, command, data, blit, end):
         super().__init__()
@@ -233,3 +233,18 @@ class Message(MessageBase):
     @property
     def byte_value(self):
         return self.header + self.coordinates + self.size + self.command + self.data + self.blit + self.end
+
+
+class ImageMessage(MessageBase):
+    def __init__(self, header: Header, coordinates: Coordinates, size: Size, command: Command, data: bytes, blit: Blit, end: End):
+        self._header = header
+        self._coordinates = coordinates
+        self._size = size
+        self._command = command
+        self._data = data
+        self._blit = blit
+        self._end = end
+
+    @property
+    def byte_value(self):
+        return self._header.byte_value + self._coordinates.byte_value + self._size.byte_value + self._command + self._data + self._blit.byte_value + self._end.byte_value
