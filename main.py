@@ -66,7 +66,7 @@ def do_image_test():
 
 
 if __name__ == "__main__":
-    running = False
+    running = True
     if running:
         suspend_ni_backend_support()
     maschine = MaschineMKiii()
